@@ -1,0 +1,43 @@
+# Services
+services:
+  # Server service
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "5050:5050"
+    environment:
+      DB_URI: "mongodb://root:pass@mongo:27017/"
+      NODE_ENV: DEV
+    depends_on:
+      - mongo
+
+  # Client service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+
+  # Database service
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    volumes:
+      - ./../letemcook_db:/data/db
+
+# Volumes define
+volumes:
+  letemcook_db:

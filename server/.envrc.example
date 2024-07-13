@@ -1,0 +1,4 @@
+# stringa di connessione database in locale
+export DB_URI="mongodb://root:pass@127.0.0.1:27017/"
+# nome dell'ambiente
+export NODE_ENV="local"

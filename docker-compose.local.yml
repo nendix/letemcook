@@ -1,0 +1,17 @@
+# Services
+services:
+  # Database service
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    volumes:
+      - ./../letemcook_local_db:/data/db
+
+# Volumes define
+volumes:
+  letemcook_local_db:
