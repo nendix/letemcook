@@ -1,1 +1,13 @@
 20240706	19:45:06	e1226409-2ce7-4fe1-b3fb-018c3851a90b	SyntaxError: Expected property name or '}' in JSON at position 6 (line 2 column 5)	POST	/users	undefined
+20240715	18:24:11	67b15c8d-6458-4c00-87c1-2cf5aa545198	ReferenceError: User is not defined	POST	/menus	undefined
+20240715	18:25:41	d30701bf-58cc-454b-ae3d-7979d39a8c31	ReferenceError: User is not defined	POST	/menus	undefined
+20240715	18:26:47	c40c2689-dc9c-4c9b-9cb4-654ffde7325e	ReferenceError: _id is not defined	POST	/menus	undefined
+20240716	17:48:31	d7b9b49d-fd37-46ea-9b02-45ee82eb1d7a	TypeError: Cannot read properties of null (reading 'username')	GET	/orders	undefined
+20240716	17:48:37	e5be9720-95c2-41df-9d6c-87fd0e331eb9	TypeError: Cannot read properties of null (reading 'username')	GET	/orders	undefined
+20240716	17:49:13	249bc626-5b1b-43e2-afa7-5c929c06a9d9	ReferenceError: order is not defined	GET	/orders	undefined
+20240716	17:49:14	9ce46151-c247-4242-a759-1e157d9af2ac	ReferenceError: order is not defined	GET	/orders	undefined
+20240716	17:49:35	ffbeacd1-9887-4325-875d-3dfe988d8c49	ReferenceError: order is not defined	GET	/orders	undefined
+20240716	17:49:35	31e4fd59-2bf5-4a8d-9eea-7671788f3b7c	ReferenceError: order is not defined	GET	/orders	undefined
+20240716	18:05:16	86e844b9-b055-4712-a06e-c5c6c2e4dd23	SyntaxError: Expected double-quoted property name in JSON at position 87 (line 6 column 1)	PATCH	/orders	undefined
+20240716	18:06:53	8b3d098d-e191-4541-a603-04014190e465	ReferenceError: duplicate is not defined	PATCH	/orders	undefined
+20240716	18:11:18	596d5430-2578-467b-bbbf-96b90cf0ee16	CastError: Cast to ObjectId failed for value "sada" (type string) at path "_id" for model "Order"	DELETE	/orders	undefined

@@ -1,21 +1,21 @@
 const mongoose = require("mongoose");
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const orderSchema = new mongoose.Schema(
   {
-    choosenMenu: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "Menu",
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    surname: {
-      type: String,
-      required: true,
-    },
     taxCode: {
+      type: String,
+      required: true,
+    },
+    first: {
+      type: String,
+      required: true,
+    },
+    second: {
+      type: String,
+      required: true,
+    },
+    side: {
       type: String,
       required: true,
     },
@@ -25,4 +25,10 @@ const orderSchema = new mongoose.Schema(
   },
 );
 
-module.exports = mongoose.model(("Order", orderSchema));
+orderSchema.plugin(AutoIncrement, {
+  inc_field: "ticket",
+  id: "ticketNums",
+  start_seq: 1,
+});
+
+module.exports = mongoose.model("Order", orderSchema);
