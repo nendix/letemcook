@@ -728,3 +728,5 @@
 20240720	19:49:40	228e256f-1c9c-4908-afe6-cca827b8e681	GET	/menus/by-date	http://localhost:3000
 20240720	19:49:40	f0a53e4e-f926-4ee3-806a-9837aea34a25	GET	/menus	http://localhost:3000
 20240720	19:49:40	b0510757-93f8-4acf-b344-39697b72fa9d	GET	/orders	http://localhost:3000
+20240720	19:50:47	df50bd25-1ce7-4ad1-bb7a-90e0b2f63b2a	GET	/	undefined
+20240720	19:50:47	11f16988-ffbc-4309-967a-a3a047d71dd8	GET	/css/style.css	undefined
