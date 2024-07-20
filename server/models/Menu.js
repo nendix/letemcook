@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const menuSchema = new mongoose.Schema({
-  day: {
+  date: {
     type: Date,
     required: true,
   },

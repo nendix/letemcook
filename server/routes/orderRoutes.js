@@ -8,5 +8,6 @@ router
   .post(orderController.createNewOrder)
   .patch(orderController.updateOrder)
   .delete(orderController.deleteOrder);
+router.route("/delete-old").delete(orderController.deleteOldOrders);
 
 module.exports = router;

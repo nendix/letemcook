@@ -10,6 +10,9 @@ const corsOptions = require("./config/corsOptions");
 const connectDB = require("./config/dbConn");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5050;
+const cron = require("node-cron");
+const { deleteOldMenus } = require("./controllers/menuController");
+const { deleteOldOrders } = require("./controllers/orderController");
 
 console.log(process.env.NODE_ENV);
 console.log(process.env.DB_URI);
@@ -55,4 +58,13 @@ mongoose.connection.on("error", (err) => {
     `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`,
     "mongoErrLog.log",
   );
+
+  // Esegui il cron job ogni giorno a mezzanotte
+  cron.schedule("0 0 * * *", () => {
+    console.log(
+      "Running the cron job to delete two-week-old menus and orders...",
+    );
+    deleteOldMenus();
+    deleteOldOrders();
+  });
 });

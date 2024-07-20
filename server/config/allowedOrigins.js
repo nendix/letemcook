@@ -1,5 +1,6 @@
 const allowedOrigins = [
+  "http://localhost:3000",
   "http://localhost:5050",
-  "mongodb://admin:password@mongodb:27017/letemcook_db",
+  "mongodb://root:pass@mongodb:27017",
 ];
 module.exports = allowedOrigins;

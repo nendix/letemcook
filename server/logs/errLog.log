@@ -11,3 +11,13 @@
 20240716	18:05:16	86e844b9-b055-4712-a06e-c5c6c2e4dd23	SyntaxError: Expected double-quoted property name in JSON at position 87 (line 6 column 1)	PATCH	/orders	undefined
 20240716	18:06:53	8b3d098d-e191-4541-a603-04014190e465	ReferenceError: duplicate is not defined	PATCH	/orders	undefined
 20240716	18:11:18	596d5430-2578-467b-bbbf-96b90cf0ee16	CastError: Cast to ObjectId failed for value "sada" (type string) at path "_id" for model "Order"	DELETE	/orders	undefined
+20240719	19:32:03	63f14583-2f8b-4f6c-9c0c-2446f5e2265e	Error: Not allowed by CORS	GET	/menus	http://localhost:3000
+20240719	19:32:03	f763130a-8fcf-41fc-8c25-04baf38bc734	Error: Not allowed by CORS	GET	/orders	http://localhost:3000
+20240719	19:32:06	78b60ebb-cfc0-4d86-a6c9-37917370fad7	Error: Not allowed by CORS	GET	/menus	http://localhost:3000
+20240719	19:32:06	4fee07f0-b95a-4812-9629-8b6206156820	Error: Not allowed by CORS	GET	/orders	http://localhost:3000
+20240719	19:32:09	9ee810b5-b83d-478a-b53c-116cccc55615	Error: Not allowed by CORS	GET	/menus	http://localhost:3000
+20240719	19:32:09	b566a7ad-858f-4f51-b4b3-85ee33f845ef	Error: Not allowed by CORS	GET	/orders	http://localhost:3000
+20240719	19:32:28	74c4a67f-f395-477f-b7c9-d51b68b1f1ab	Error: Not allowed by CORS	OPTIONS	/menus	http://localhost:3000
+20240719	19:32:31	59a44b05-a33f-4ddf-8ab8-b4ffc62b4ab3	Error: Not allowed by CORS	OPTIONS	/menus	http://localhost:3000
+20240719	19:32:32	a653bbb1-0224-4e1e-986b-e54418f3a705	Error: Not allowed by CORS	OPTIONS	/menus	http://localhost:3000
+20240719	19:32:47	36d31966-6639-4221-b825-3af586580316	Error: Not allowed by CORS	GET	/menus?date=2024-07-19	http://localhost:3000

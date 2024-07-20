@@ -109,9 +109,20 @@ const deleteOrder = asyncHandler(async (req, res) => {
 
   res.json(reply);
 });
+
+const deleteOldOrders = asyncHandler(async (req, res) => {
+  try {
+    const twoWeeksAgo = moment().subtract(2, "weeks").toDate();
+    await Order.deleteMany({ updatedAt: { $lt: twoWeeksAgo } });
+    res.status(200).send({ message: "Two-week-old orders eliminated." });
+  } catch (error) {
+    res.status(500).send({ message: "Error deleting orders:", error });
+  }
+});
 module.exports = {
   getAllOrders,
   createNewOrder,
   updateOrder,
   deleteOrder,
+  deleteOldOrders,
 };
