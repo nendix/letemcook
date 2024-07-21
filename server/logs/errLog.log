@@ -21,3 +21,6 @@
 20240719	19:32:31	59a44b05-a33f-4ddf-8ab8-b4ffc62b4ab3	Error: Not allowed by CORS	OPTIONS	/menus	http://localhost:3000
 20240719	19:32:32	a653bbb1-0224-4e1e-986b-e54418f3a705	Error: Not allowed by CORS	OPTIONS	/menus	http://localhost:3000
 20240719	19:32:47	36d31966-6639-4221-b825-3af586580316	Error: Not allowed by CORS	GET	/menus?date=2024-07-19	http://localhost:3000
+20240721	11:49:30	a46fc8d1-4680-44a4-965e-da92673aadd7	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	13:13:42	789f3e9d-8dee-4cf6-bafa-d96df3050c03	ReferenceError: password is not defined	PATCH	/users	undefined
+20240721	15:41:43	ad2e0a05-289b-47c6-aa39-c3c2fa7ba7db	ValidationError: Menu validation failed: side.0: Path `side.0` is required.	PATCH	/menus	http://localhost:3000

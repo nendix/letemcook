@@ -44,20 +44,30 @@ const MenuOfTheDay = () => {
     return `${day}/${month}/${year}`;
   };
   return (
-    <Card>
-      <Card.Header>{formatDate(menuOfTheDay.date)}</Card.Header>
-      <Card.Body>
-        <Card.Title>Menu del giorno</Card.Title>
-        <Card.Text>
-          <strong>Primo:</strong> {menuOfTheDay.first?.join(", ") || "N/A"}
-        </Card.Text>
-        <Card.Text>
-          <strong>Secondo:</strong> {menuOfTheDay.second?.join(", ") || "N/A"}
-        </Card.Text>
-        <Card.Text>
-          <strong>Contorno:</strong> {menuOfTheDay.side?.join(", ") || "N/A"}
-        </Card.Text>
-      </Card.Body>
+    <Card className="menu-card">
+      {error ? (
+        <Alert variant="danger" className="error-message">
+          {error}
+        </Alert>
+      ) : (
+        <>
+          <Card.Header>{formatDate(menuOfTheDay?.date)}</Card.Header>
+          <Card.Body>
+            <Card.Title>Menu del giorno</Card.Title>
+            <Card.Text>
+              <strong>Primo:</strong> {menuOfTheDay?.first?.join(", ") || "N/A"}
+            </Card.Text>
+            <Card.Text>
+              <strong>Secondo:</strong>{" "}
+              {menuOfTheDay?.second?.join(", ") || "N/A"}
+            </Card.Text>
+            <Card.Text>
+              <strong>Contorno:</strong>{" "}
+              {menuOfTheDay?.side?.join(", ") || "N/A"}
+            </Card.Text>
+          </Card.Body>
+        </>
+      )}
     </Card>
   );
 };

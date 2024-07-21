@@ -1,164 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Container, Table, Button, Form, Modal } from "react-bootstrap";
-import {
-  getMenus,
-  createMenu,
-  updateMenu,
-  deleteMenu,
-  deleteOldMenus,
-  deleteOldOrders,
-  getOrders,
-  createOrder,
-  updateOrder,
-  deleteOrder,
-} from "../services/api";
-
+import { useAdminHooks } from "../hooks/AdminHooks";
 const AdminPage = () => {
-  const [menus, setMenus] = useState([]);
-  const [orders, setOrders] = useState([]);
-  const [showMenuModal, setShowMenuModal] = useState(false);
-  const [showOrderModal, setShowOrderModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [currentMenu, setCurrentMenu] = useState(null);
-  const [currentOrder, setCurrentOrder] = useState(null);
-  const [itemToDelete, setItemToDelete] = useState(null);
-  const [deleteType, setDeleteType] = useState(null); // "menu" o "order"
-
-  useEffect(() => {
-    loadMenus();
-    loadOrders();
-  }, []);
-
-  const loadMenus = () => {
-    getMenus().then((response) => setMenus(response.data));
-  };
-
-  const loadOrders = () => {
-    getOrders().then((response) => setOrders(response.data));
-  };
-
-  const handleShowMenuModal = (menu = null) => {
-    setCurrentMenu(menu);
-    setShowMenuModal(true);
-  };
-
-  const handleCloseMenuModal = () => {
-    setShowMenuModal(false);
-    setCurrentMenu(null);
-  };
-
-  const handleShowOrderModal = (order = null) => {
-    setCurrentOrder(order);
-    setShowOrderModal(true);
-  };
-
-  const handleCloseOrderModal = () => {
-    setShowOrderModal(false);
-    setCurrentOrder(null);
-  };
-
-  const handleSaveMenu = (event) => {
-    event.preventDefault();
-    const { date, first, second, side } = event.target.elements;
-    const menuData = {
-      date: date.value,
-      first: first.value.split(","),
-      second: second.value.split(","),
-      side: side.value.split(","),
-    };
-    if (currentMenu) {
-      updateMenu({ ...menuData, id: currentMenu._id }).then(loadMenus);
-    } else {
-      createMenu(menuData).then(loadMenus);
-    }
-    handleCloseMenuModal();
-  };
-
-  const handleSaveOrder = (event) => {
-    event.preventDefault();
-    const { taxCode, first, second, side } = event.target.elements;
-    const orderData = {
-      taxCode: taxCode.value,
-      first: first.value,
-      second: second.value,
-      side: side.value,
-    };
-    if (currentOrder) {
-      updateOrder({ ...orderData, id: currentOrder._id }).then(loadOrders);
-    } else {
-      createOrder(orderData).then(loadOrders);
-    }
-    handleCloseOrderModal();
-  };
-
-  const handleDeleteMenu = (id) => {
-    const menuToDelete = menus.find((menu) => menu._id === id);
-    handleShowConfirmModal(menuToDelete, "menu");
-  };
-
-  const handleDeleteOrder = (id) => {
-    const orderToDelete = orders.find((order) => order._id === id);
-    handleShowConfirmModal(orderToDelete, "order");
-  };
-
-  const handleDeleteOldMenus = async () => {
-    try {
-      await deleteOldMenus();
-      loadMenus();
-      alert("Menu vecchi di due settimane eliminati.");
-    } catch (error) {
-      alert("Errore durante l'eliminazione dei menu.");
-    }
-  };
-
-  const handleDeleteOldOrders = async () => {
-    try {
-      await deleteOldOrders();
-      loadOrders();
-      alert("Ordini vecchi di due settimane eliminati.");
-    } catch (error) {
-      alert("Errore durante l'eliminazione degli ordini.");
-    }
-  };
-
-  const handleShowConfirmModal = (item, type) => {
-    setItemToDelete(item);
-    setDeleteType(type);
-    setShowConfirmModal(true);
-  };
-
-  const handleCloseConfirmModal = () => {
-    setShowConfirmModal(false);
-    setItemToDelete(null);
-    setDeleteType(null);
-  };
-
-  const handleConfirmDelete = async () => {
-    try {
-      if (deleteType === "menu" && itemToDelete) {
-        await deleteMenu(itemToDelete._id);
-        loadMenus();
-      } else if (deleteType === "order" && itemToDelete) {
-        await deleteOrder(itemToDelete._id);
-        loadOrders();
-      }
-      alert("Eliminazione completata con successo.");
-    } catch (error) {
-      alert("Errore durante l'eliminazione.");
-    } finally {
-      handleCloseConfirmModal();
-    }
-  };
-
-  // Funzione per formattare la data in dd-mm-yyyy
-  const formatDate = (date) => {
-    if (!date) return "";
-    const d = new Date(date);
-    const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const year = d.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
+  const {
+    menus,
+    orders,
+    users,
+    showMenuModal,
+    showOrderModal,
+    showUserModal,
+    showConfirmModal,
+    currentMenu,
+    currentOrder,
+    currentUser,
+    deleteType,
+    formatDate,
+    handleShowMenuModal,
+    handleCloseMenuModal,
+    handleShowOrderModal,
+    handleCloseOrderModal,
+    handleShowUserModal,
+    handleCloseUserModal,
+    handleSaveMenu,
+    handleSaveOrder,
+    handleSaveUser,
+    handleDeleteMenu,
+    handleDeleteOrder,
+    handleDeleteUser,
+    handleDeleteOldMenus,
+    handleDeleteOldOrders,
+    handleCloseConfirmModal,
+    handleConfirmDelete,
+  } = useAdminHooks();
 
   return (
     <Container className="mt-5">
@@ -224,24 +97,21 @@ const AdminPage = () => {
               <Form.Label>Primo</Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={currentMenu ? currentMenu.first.join(",") : ""}
-                placeholder="Inserisci i primi piatti separati da virgola"
+                defaultValue={currentMenu ? currentMenu.first.join(", ") : ""}
               />
             </Form.Group>
             <Form.Group controlId="second">
               <Form.Label>Secondo</Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={currentMenu ? currentMenu.second.join(",") : ""}
-                placeholder="Inserisci i secondi piatti separati da virgola"
+                defaultValue={currentMenu ? currentMenu.second.join(", ") : ""}
               />
             </Form.Group>
             <Form.Group controlId="side">
               <Form.Label>Contorno</Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={currentMenu ? currentMenu.side.join(",") : ""}
-                placeholder="Inserisci i contorni separati da virgola"
+                defaultValue={currentMenu ? currentMenu.side.join(", ") : ""}
               />
             </Form.Group>
           </Modal.Body>
@@ -256,11 +126,11 @@ const AdminPage = () => {
         </Form>
       </Modal>
 
-      <h1>Gestione Ordini</h1>
+      <h1 className="mt-5">Gestione Ordini</h1>
       <Button variant="primary" onClick={() => handleShowOrderModal()}>
         Aggiungi Ordine
       </Button>
-      <Button variant="danger" onClick={handleDeleteOldOrders} className="mt-3">
+      <Button variant="danger" onClick={handleDeleteOldOrders}>
         Elimina Ordini Vecchi di Due Settimane
       </Button>
       <Table striped bordered hover className="mt-3">
@@ -312,7 +182,6 @@ const AdminPage = () => {
               <Form.Control
                 type="text"
                 defaultValue={currentOrder ? currentOrder.taxCode : ""}
-                placeholder="Inserisci il codice fiscale"
               />
             </Form.Group>
             <Form.Group controlId="first">
@@ -320,7 +189,6 @@ const AdminPage = () => {
               <Form.Control
                 type="text"
                 defaultValue={currentOrder ? currentOrder.first : ""}
-                placeholder="Inserisci il primo piatto"
               />
             </Form.Group>
             <Form.Group controlId="second">
@@ -328,7 +196,6 @@ const AdminPage = () => {
               <Form.Control
                 type="text"
                 defaultValue={currentOrder ? currentOrder.second : ""}
-                placeholder="Inserisci il secondo piatto"
               />
             </Form.Group>
             <Form.Group controlId="side">
@@ -336,12 +203,85 @@ const AdminPage = () => {
               <Form.Control
                 type="text"
                 defaultValue={currentOrder ? currentOrder.side : ""}
-                placeholder="Inserisci il contorno"
               />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseOrderModal}>
+              Chiudi
+            </Button>
+            <Button variant="primary" type="submit">
+              Salva
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      <h1 className="mt-5">Gestione Utenti</h1>
+      <Button variant="primary" onClick={() => handleShowUserModal()}>
+        Aggiungi Utente
+      </Button>
+      <Table striped bordered hover className="mt-3">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Ruoli</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>{user.username}</td>
+              <td>{user.roles.join(", ")}</td>
+              <td>
+                <Button
+                  variant="warning"
+                  onClick={() => handleShowUserModal(user)}
+                >
+                  Modifica
+                </Button>{" "}
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteUser(user._id)}
+                >
+                  Elimina
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+
+      <Modal show={showUserModal} onHide={handleCloseUserModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {currentUser ? "Modifica Utente" : "Aggiungi Utente"}
+          </Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={handleSaveUser}>
+          <Modal.Body>
+            <Form.Group controlId="username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                defaultValue={currentUser ? currentUser.username : ""}
+              />
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Password (leave blank to keep current)</Form.Label>
+              <Form.Control type="password" placeholder="New password" />
+            </Form.Group>
+            <Form.Group controlId="roles">
+              <Form.Label>Ruoli</Form.Label>
+              <Form.Control
+                type="text"
+                defaultValue={currentUser ? currentUser.roles.join(", ") : ""}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseUserModal}>
               Chiudi
             </Button>
             <Button variant="primary" type="submit">
@@ -357,14 +297,19 @@ const AdminPage = () => {
         </Modal.Header>
         <Modal.Body>
           Sei sicuro di voler eliminare questo{" "}
-          {deleteType === "menu" ? "menu" : "ordine"}?
+          {deleteType === "menu"
+            ? "menu"
+            : deleteType === "order"
+              ? "ordine"
+              : "utente"}
+          ?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseConfirmModal}>
             Annulla
           </Button>
           <Button variant="danger" onClick={handleConfirmDelete}>
-            Conferma
+            Elimina
           </Button>
         </Modal.Footer>
       </Modal>
