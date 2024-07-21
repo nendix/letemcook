@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Container, Table, Button, Form, Modal } from "react-bootstrap";
+import { Container, Table, Button, Form, Modal, Alert } from "react-bootstrap";
 import { useAdminHooks } from "../hooks/AdminHooks";
 const AdminPage = () => {
   const {
+    menuError,
     menus,
+    orderError,
     orders,
+    userError,
     users,
     showMenuModal,
     showOrderModal,
@@ -28,7 +30,7 @@ const AdminPage = () => {
     handleDeleteOrder,
     handleDeleteUser,
     handleDeleteOldMenus,
-    handleDeleteOldOrders,
+    handleResetOrdersAndTickets,
     handleCloseConfirmModal,
     handleConfirmDelete,
   } = useAdminHooks();
@@ -36,6 +38,7 @@ const AdminPage = () => {
   return (
     <Container className="mt-5">
       <h1>Gestione Menu</h1>
+      {menuError && <Alert variant="danger">{menuError}</Alert>}
       <Button variant="primary" onClick={() => handleShowMenuModal()}>
         Aggiungi Menu
       </Button>
@@ -127,11 +130,12 @@ const AdminPage = () => {
       </Modal>
 
       <h1 className="mt-5">Gestione Ordini</h1>
+      {orderError && <Alert variant="danger">{orderError}</Alert>}
       <Button variant="primary" onClick={() => handleShowOrderModal()}>
         Aggiungi Ordine
       </Button>
-      <Button variant="danger" onClick={handleDeleteOldOrders}>
-        Elimina Ordini Vecchi di Due Settimane
+      <Button variant="danger" onClick={handleResetOrdersAndTickets}>
+        Elimina Tutti Gli Ordini
       </Button>
       <Table striped bordered hover className="mt-3">
         <thead>
@@ -218,6 +222,7 @@ const AdminPage = () => {
       </Modal>
 
       <h1 className="mt-5">Gestione Utenti</h1>
+      {userError && <Alert variant="danger">{userError}</Alert>}
       <Button variant="primary" onClick={() => handleShowUserModal()}>
         Aggiungi Utente
       </Button>

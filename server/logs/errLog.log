@@ -24,3 +24,20 @@
 20240721	11:49:30	a46fc8d1-4680-44a4-965e-da92673aadd7	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
 20240721	13:13:42	789f3e9d-8dee-4cf6-bafa-d96df3050c03	ReferenceError: password is not defined	PATCH	/users	undefined
 20240721	15:41:43	ad2e0a05-289b-47c6-aa39-c3c2fa7ba7db	ValidationError: Menu validation failed: side.0: Path `side.0` is required.	PATCH	/menus	http://localhost:3000
+20240721	18:48:36	181cacca-2302-4386-bac9-8eb56efa3310	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	18:51:00	cf55254c-b3c5-4ce4-a764-8ea445273ee9	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	18:51:10	e33bcc7f-8720-4818-bddd-02eafd9345e9	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	18:51:53	ba645681-291a-4ded-ad31-08d8307094c2	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	18:54:22	fc7f6723-1562-4b69-9a0f-316903a7ab43	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	18:54:42	2c935454-e94e-4f0d-847f-5d5dce8d0a34	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	18:55:51	d966f641-8d22-450d-a0d2-8418af65e97c	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	19:00:59	cbd56898-25d0-4c29-b81f-7c5121fe7699	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	19:07:28	0cf3d0bd-69aa-4af2-9f74-bb134f88142d	ReferenceError: jwt is not defined	POST	/users/login	http://localhost:3000
+20240721	19:11:24	ff4a7030-75b0-4196-a518-ecb15624521f	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240721	19:11:26	56cf3d69-5e8e-4d75-8912-036b31146f09	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240721	19:11:26	781e654b-ed25-40e0-b939-a39ccd05e4d7	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240721	19:11:26	fd950183-2464-4581-9338-3e34fd8209d1	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240721	19:11:26	5d05418c-9115-4405-a9d9-549e314fc44c	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240721	19:11:26	e6a2c8c4-96f1-4f23-b66e-ba3647ed7e24	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240721	19:12:56	311ac4c9-3a1e-496c-9ef7-8deaa9b4f506	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240721	19:12:58	9cd8b661-7485-489e-9cdf-3f3256e11984	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000

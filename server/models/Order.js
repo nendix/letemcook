@@ -5,6 +5,7 @@ const orderSchema = new mongoose.Schema(
   {
     taxCode: {
       type: String,
+      unique: true,
       required: true,
     },
     first: {

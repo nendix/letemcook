@@ -1,6 +1,6 @@
 const Order = require("../models/Order");
-const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const jwt = require("jsonwebtoken");
 
 // @desc Get all orders
 // @route GET /orders
@@ -110,10 +110,14 @@ const deleteOrder = asyncHandler(async (req, res) => {
   res.json(reply);
 });
 
-const deleteOldOrders = asyncHandler(async (req, res) => {
+const resetOrdersAndTickets = asyncHandler(async (req, res) => {
   try {
-    const twoWeeksAgo = moment().subtract(2, "weeks").toDate();
-    await Order.deleteMany({ updatedAt: { $lt: twoWeeksAgo } });
+    // Elimina tutti gli ordini
+    await Order.deleteMany({});
+
+    // Resetta il ticket a 1
+    // await Order.updateMany({}, { $set: { ticket: 1 } });
+
     res.status(200).send({ message: "Two-week-old orders eliminated." });
   } catch (error) {
     res.status(500).send({ message: "Error deleting orders:", error });
@@ -124,5 +128,5 @@ module.exports = {
   createNewOrder,
   updateOrder,
   deleteOrder,
-  deleteOldOrders,
+  resetOrdersAndTickets,
 };

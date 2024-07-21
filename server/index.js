@@ -12,7 +12,10 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5050;
 const cron = require("node-cron");
 const { deleteOldMenus } = require("./controllers/menuController");
-const { deleteOldOrders } = require("./controllers/orderController");
+const {
+  deleteOldOrders,
+  resetOrdersAndTickets,
+} = require("./controllers/orderController");
 
 console.log(process.env.NODE_ENV);
 console.log(process.env.DB_URI);
@@ -29,7 +32,6 @@ app.use(cookieParser());
 
 app.use("/", express.static(path.join(__dirname, "public")));
 
-app.use("/", require("./routes/root"));
 app.use("/users", require("./routes/userRoutes"));
 app.use("/menus", require("./routes/menuRoutes"));
 app.use("/orders", require("./routes/orderRoutes"));
@@ -65,6 +67,9 @@ mongoose.connection.on("error", (err) => {
       "Running the cron job to delete two-week-old menus and orders...",
     );
     deleteOldMenus();
-    deleteOldOrders();
+  });
+  cron.schedule("0 6 * * *", () => {
+    console.log("Running the cron job to reset orders and tickets");
+    resetOrdersAndTickets();
   });
 });

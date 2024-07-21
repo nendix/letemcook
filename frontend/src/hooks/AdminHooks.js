@@ -5,7 +5,7 @@ import {
   updateMenu,
   deleteMenu,
   deleteOldMenus,
-  deleteOldOrders,
+  resetOrdersAndTickets,
   getOrders,
   createOrder,
   updateOrder,
@@ -15,6 +15,8 @@ import {
   updateUser,
   deleteUser,
 } from "../services/api";
+
+import { hasPermission } from "../utils/auth";
 
 export const useAdminHooks = () => {
   const [menus, setMenus] = useState([]);
@@ -29,23 +31,67 @@ export const useAdminHooks = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [deleteType, setDeleteType] = useState(null); // "menu", "order" o "user"
-
+  const [menuError, setMenuError] = useState("");
+  const [orderError, setOrderError] = useState("");
+  const [userError, setUserError] = useState("");
   useEffect(() => {
     loadMenus();
     loadOrders();
     loadUsers();
   }, []);
 
-  const loadMenus = () =>
-    getMenus().then((response) => setMenus(response.data));
-  const loadOrders = () =>
-    getOrders().then((response) => setOrders(response.data));
-  const loadUsers = () =>
-    getUsers().then((response) => setUsers(response.data));
+  const loadMenus = async () => {
+    try {
+      const response = await getMenus();
+      if (response.data.length === 0) {
+        setMenuError("Nessun menu disponibile nel database.");
+      } else {
+        setMenus(response.data);
+        setMenuError(""); // Resetta l'errore se ci sono dati
+      }
+    } catch (err) {
+      setMenuError("Errore durante il caricamento dei menu.");
+      console.error(err);
+    }
+  };
+
+  const loadOrders = async () => {
+    try {
+      const response = await getOrders();
+      if (response.data.length === 0) {
+        setOrderError("Nessun ordine disponibile nel database.");
+      } else {
+        setOrders(response.data);
+        setOrderError(""); // Resetta l'errore se ci sono dati
+      }
+    } catch (err) {
+      setOrderError("Errore durante il caricamento degli ordini.");
+      console.error(err);
+    }
+  };
+
+  const loadUsers = async () => {
+    try {
+      const response = await getUsers();
+      if (response.data.length === 0) {
+        setUserError("Nessun utente disponibile nel database.");
+      } else {
+        setUsers(response.data);
+        setUserError(""); // Resetta l'errore se ci sono dati
+      }
+    } catch (err) {
+      setUserError("Errore durante il caricamento degli utenti.");
+      console.error(err);
+    }
+  };
 
   const handleShowMenuModal = (menu = null) => {
-    setCurrentMenu(menu);
-    setShowMenuModal(true);
+    if (hasPermission("admin")) {
+      setCurrentMenu(menu);
+      setShowMenuModal(true);
+    } else {
+      alert("Non hai i permessi necessari.");
+    }
   };
 
   const handleCloseMenuModal = () => {
@@ -54,8 +100,12 @@ export const useAdminHooks = () => {
   };
 
   const handleShowOrderModal = (order = null) => {
-    setCurrentOrder(order);
-    setShowOrderModal(true);
+    if (hasPermission("admin")) {
+      setCurrentOrder(order);
+      setShowOrderModal(true);
+    } else {
+      alert("Non hai i permessi necessari.");
+    }
   };
 
   const handleCloseOrderModal = () => {
@@ -64,8 +114,12 @@ export const useAdminHooks = () => {
   };
 
   const handleShowUserModal = (user = null) => {
-    setCurrentUser(user);
-    setShowUserModal(true);
+    if (hasPermission("admin")) {
+      setCurrentUser(user);
+      setShowUserModal(true);
+    } else {
+      alert("Non hai i permessi necessari.");
+    }
   };
 
   const handleCloseUserModal = () => {
@@ -75,6 +129,10 @@ export const useAdminHooks = () => {
 
   const handleSaveMenu = (event) => {
     event.preventDefault();
+    if (!hasPermission("admin")) {
+      alert("Non hai i permessi necessari.");
+      return;
+    }
     const { date, first, second, side } = event.target.elements;
     const menuData = {
       date: date.value || currentMenu.date,
@@ -96,6 +154,10 @@ export const useAdminHooks = () => {
 
   const handleSaveOrder = (event) => {
     event.preventDefault();
+    if (!hasPermission("admin")) {
+      alert("Non hai i permessi necessari.");
+      return;
+    }
     const { taxCode, first, second, side } = event.target.elements;
     const orderData = {
       taxCode: taxCode.value || currentOrder.taxCode,
@@ -113,6 +175,10 @@ export const useAdminHooks = () => {
 
   const handleSaveUser = (event) => {
     event.preventDefault();
+    if (!hasPermission("admin")) {
+      alert("Non hai i permessi necessari.");
+      return;
+    }
     const { username, roles, password } = event.target.elements;
 
     const userData = {
@@ -134,21 +200,37 @@ export const useAdminHooks = () => {
   };
 
   const handleDeleteMenu = (id) => {
-    const menuToDelete = menus.find((menu) => menu._id === id);
-    handleShowConfirmModal(menuToDelete, "menu");
+    if (hasPermission("admin")) {
+      const menuToDelete = menus.find((menu) => menu._id === id);
+      handleShowConfirmModal(menuToDelete, "menu");
+    } else {
+      alert("Non hai i permessi necessari.");
+    }
   };
 
   const handleDeleteOrder = (id) => {
-    const orderToDelete = orders.find((order) => order._id === id);
-    handleShowConfirmModal(orderToDelete, "order");
+    if (hasPermission("admin")) {
+      const orderToDelete = orders.find((order) => order._id === id);
+      handleShowConfirmModal(orderToDelete, "order");
+    } else {
+      alert("Non hai i permessi necessari.");
+    }
   };
 
   const handleDeleteUser = (id) => {
-    const userToDelete = users.find((user) => user._id === id);
-    handleShowConfirmModal(userToDelete, "user");
+    if (hasPermission("admin")) {
+      const userToDelete = users.find((user) => user._id === id);
+      handleShowConfirmModal(userToDelete, "user");
+    } else {
+      alert("Non hai i permessi necessari.");
+    }
   };
 
   const handleDeleteOldMenus = async () => {
+    if (!hasPermission("admin")) {
+      alert("Non hai i permessi necessari.");
+      return;
+    }
     try {
       await deleteOldMenus();
       loadMenus();
@@ -158,9 +240,13 @@ export const useAdminHooks = () => {
     }
   };
 
-  const handleDeleteOldOrders = async () => {
+  const handleResetOrdersAndTickets = async () => {
+    if (!hasPermission("admin")) {
+      alert("Non hai i permessi necessari.");
+      return;
+    }
     try {
-      await deleteOldOrders();
+      await resetOrdersAndTickets();
       loadOrders();
       alert("Ordini vecchi di due settimane eliminati.");
     } catch (error) {
@@ -209,8 +295,11 @@ export const useAdminHooks = () => {
   };
 
   return {
+    menuError,
     menus,
+    orderError,
     orders,
+    userError,
     users,
     showMenuModal,
     showOrderModal,
@@ -235,7 +324,7 @@ export const useAdminHooks = () => {
     handleDeleteOrder,
     handleDeleteUser,
     handleDeleteOldMenus,
-    handleDeleteOldOrders,
+    handleResetOrdersAndTickets,
     handleShowConfirmModal,
     handleCloseConfirmModal,
     handleConfirmDelete,

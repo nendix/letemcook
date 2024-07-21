@@ -2,6 +2,15 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const authenticateToken = require("../middleware/authenticateToken");
+const authorizeRoles = require("../middleware/authorizeRoles");
+
+// Rotte pubbliche
+router.post("/register", userController.registerUser);
+router.post("/login", userController.loginUser);
+
+// Rotte private per Admin
+router.use(authenticateToken); // Autenticazione necessaria
+router.use(authorizeRoles("admin")); // Solo gli Admin possono accedere
 
 router
   .route("/")
@@ -9,8 +18,5 @@ router
   .post(userController.createNewUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
-
-router.route("/login").post(userController.loginUser);
-router.route("/register").post(userController.registerUser);
 
 module.exports = router;
