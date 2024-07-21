@@ -1,3 +1,5 @@
+/* App.css */
+
 body {
   background-color: #eff1f5; /* Dark gray background */
   font-family: "Arial", sans-serif;
@@ -39,11 +41,20 @@ body {
 }
 
 .menu-card {
-  margin: 2rem auto;
-  max-width: 600px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem; /* Add padding to the card */
+  max-width: 500px;
+  margin: 0 auto; /* Centra la card orizzontalmente */
+  text-align: center; /* Centra il testo all'interno della card */
+}
+
+/* Assicurati che il testo all'interno della card sia centrato */
+.menu-card .card-body {
+  text-align: left; /* Centra il testo del corpo della card */
+}
+
+/* Stili per l'alert di errore */
+.error-message {
+  margin: 0; /* Rimuove il margine per adattarsi alla card */
+  padding: 1rem; /* Aggiunge padding all'alert */
 }
 
 .footer {
@@ -102,30 +113,29 @@ body {
 }
 
 .menu-of-the-day-container {
+  max-width: 500px;
+  max-height: 300px;
   background-color: #dce0e8;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Navbar styles */
 .navbar-custom {
-  height: 80px; /* Altezza maggiore per la NavBar */
+  height: 80px; /* Altezza della NavBar */
   display: flex;
   align-items: center;
   background: #303446;
 }
-.navbar-custom span {
-  color: #c6d0f5;
-}
-
-.navbar-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
 
 .navbar-brand {
+  position: absolute;
+  left: 50%; /* Centro del brand */
+  transform: translateX(-50%); /* Centro perfetto */
   display: flex;
   align-items: center;
+  justify-content: center; /* Centro logo e testo */
 }
 
 .navbar-brand img {
@@ -136,6 +146,13 @@ body {
   font-size: 1.25rem; /* Dimensione del testo */
 }
 
-.login-button {
-  margin-right: 10px; /* Spazio a destra del pulsante di login */
+/* Pulsanti a sinistra */
+.navbar-nav-left {
+  display: flex;
+  flex-direction: row;
+  margin-right: auto; /* Allinea i pulsanti a sinistra */
+}
+
+.nav-button {
+  margin-right: 1rem; /* Spazio tra i pulsanti */
 }

@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import "react-datepicker/dist/react-datepicker.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { createOrder, getMenuOfTheDay } from "../services/api";
 import "../App.css"; // import the CSS file
 
-const MenuForm = () => {
+const OrderForm = () => {
   const [date, setDate] = useState(new Date()); // Current date
   const [menu, setMenu] = useState(null);
   const [taxCode, setTaxCode] = useState("");
   const [selectedFirst, setSelectedFirst] = useState("");
   const [selectedSecond, setSelectedSecond] = useState("");
   const [selectedSide, setSelectedSide] = useState("");
-  const [orderStatus, setOrderStatus] = useState("");
 
   useEffect(() => {
     const fetchMenu = async () => {
       try {
         const response = await getMenuOfTheDay();
-        console.log("Menu fetched:", response.data); // Log the fetched menu
         setMenu(response.data);
         setSelectedFirst("");
         setSelectedSecond("");
         setSelectedSide("");
       } catch (error) {
+        toast.error("Errore nel recupero del menu. Riprova.");
         setMenu(null);
-        setOrderStatus("Errore nel recupero del menu. Riprova.");
       }
     };
 
@@ -35,7 +34,7 @@ const MenuForm = () => {
     event.preventDefault();
 
     if (!selectedFirst || !selectedSecond || !selectedSide) {
-      setOrderStatus("Tutti i campi devono essere selezionati.");
+      toast.warning("Tutti i campi devono essere selezionati.");
       return;
     }
 
@@ -49,13 +48,13 @@ const MenuForm = () => {
 
     try {
       await createOrder(orderData);
-      setOrderStatus("Ordine inviato con successo!");
+      toast.success("Ordine inviato con successo!");
       setTaxCode("");
       setSelectedFirst("");
       setSelectedSecond("");
       setSelectedSide("");
     } catch (error) {
-      setOrderStatus("Errore nell'invio dell'ordine. Riprova.");
+      toast.error("Errore nell'invio dell'ordine. Riprova.");
     }
   };
 
@@ -134,9 +133,8 @@ const MenuForm = () => {
       <Button variant="primary" type="submit" className="submit-button">
         Ordina
       </Button>
-      {orderStatus && <p className="mt-3">{orderStatus}</p>}
     </Form>
   );
 };
 
-export default MenuForm;
+export default OrderForm;

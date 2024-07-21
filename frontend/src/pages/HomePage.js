@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import MenuForm from "../components/MenuForm";
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import OrderForm from "../components/OrderForm";
 import MenuOfTheDay from "../components/MenuOfTheDay";
 import "../App.css"; // import the CSS file
 
 const HomePage = () => {
-  const [showMenuOfTheDay, setShowMenuOfTheDay] = useState(false);
-
-  const toggleMenuOfTheDay = () => {
-    setShowMenuOfTheDay(!showMenuOfTheDay);
-  };
-
   return (
     <Container fluid className="homepage-container">
       <Row className="align-items-center header-row">
@@ -19,23 +13,12 @@ const HomePage = () => {
             MENSA <br />
             UNIVERSITÀ DEGLI STUDI DEL MOLISE
           </h1>
-          <Button
-            variant="primary"
-            onClick={toggleMenuOfTheDay}
-            className="mt-3"
-          >
-            {showMenuOfTheDay
-              ? "Nascondi Menu del Giorno"
-              : "Mostra Menu del Giorno"}
-          </Button>
-          {showMenuOfTheDay && (
-            <div className="menu-of-the-day-container mt-3">
-              <MenuOfTheDay />
-            </div>
-          )}
+          <div className="menu-of-the-day-container mt-3">
+            <MenuOfTheDay />
+          </div>
         </Col>
         <Col md={{ span: 5, offset: 1 }} className="form-column">
-          <MenuForm />
+          <OrderForm />
         </Col>
       </Row>
     </Container>
