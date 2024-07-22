@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { createOrder, getMenuOfTheDay } from "../services/api";
 import "../App.css"; // import the CSS file
 
@@ -12,6 +10,8 @@ const OrderForm = () => {
   const [selectedFirst, setSelectedFirst] = useState("");
   const [selectedSecond, setSelectedSecond] = useState("");
   const [selectedSide, setSelectedSide] = useState("");
+  const [message, setMessage] = useState(""); // State for messages
+  const [messageType, setMessageType] = useState(""); // State for message type (success or error)
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -21,8 +21,10 @@ const OrderForm = () => {
         setSelectedFirst("");
         setSelectedSecond("");
         setSelectedSide("");
+        setMessage(""); // Clear any previous messages
       } catch (error) {
-        toast.error("Errore nel recupero del menu. Riprova.");
+        setMessage("Errore nel recupero del menu. Riprova.");
+        setMessageType("error");
         setMenu(null);
       }
     };
@@ -34,7 +36,8 @@ const OrderForm = () => {
     event.preventDefault();
 
     if (!selectedFirst || !selectedSecond || !selectedSide) {
-      toast.warning("Tutti i campi devono essere selezionati.");
+      setMessage("Tutti i campi devono essere selezionati.");
+      setMessageType("warning");
       return;
     }
 
@@ -48,92 +51,110 @@ const OrderForm = () => {
 
     try {
       await createOrder(orderData);
-      toast.success("Ordine inviato con successo!");
+      setMessage("Ordine inviato con successo!");
+      setMessageType("success");
       setTaxCode("");
       setSelectedFirst("");
       setSelectedSecond("");
       setSelectedSide("");
     } catch (error) {
-      toast.error("Errore nell'invio dell'ordine. Riprova.");
+      setMessage("Errore nell'invio dell'ordine. Riprova.");
+      setMessageType("error");
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="form-container">
-      <Form.Group controlId="taxCode">
-        <Form.Label>Codice Fiscale</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Inserisci il codice fiscale"
-          value={taxCode}
-          onChange={(e) => setTaxCode(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="first">
-        <Form.Label>Primo</Form.Label>
-        <Form.Control
-          as="select"
-          value={selectedFirst}
-          onChange={(e) => setSelectedFirst(e.target.value)}
-          required
-        >
-          <option value="">Seleziona un primo</option>
-          {menu?.first?.length ? (
-            menu.first.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))
-          ) : (
-            <option value="">Nessuna opzione disponibile</option>
-          )}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="second">
-        <Form.Label>Secondo</Form.Label>
-        <Form.Control
-          as="select"
-          value={selectedSecond}
-          onChange={(e) => setSelectedSecond(e.target.value)}
-          required
-        >
-          <option value="">Seleziona un secondo</option>
-          {menu?.second?.length ? (
-            menu.second.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))
-          ) : (
-            <option value="">Nessuna opzione disponibile</option>
-          )}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="side">
-        <Form.Label>Contorno</Form.Label>
-        <Form.Control
-          as="select"
-          value={selectedSide}
-          onChange={(e) => setSelectedSide(e.target.value)}
-          required
-        >
-          <option value="">Seleziona un contorno</option>
-          {menu?.side?.length ? (
-            menu.side.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))
-          ) : (
-            <option value="">Nessuna opzione disponibile</option>
-          )}
-        </Form.Control>
-      </Form.Group>
-      <Button variant="primary" type="submit" className="submit-button">
-        Ordina
-      </Button>
-    </Form>
+    <div className="order-form-container">
+      <Form onSubmit={handleSubmit} className="form-container">
+        {message && (
+          <div
+            className={`alert ${
+              messageType === "success"
+                ? "alert-success"
+                : messageType === "error"
+                ? "alert-danger"
+                : "alert-warning"
+            }`}
+            role="alert"
+          >
+            {message}
+          </div>
+        )}
+        <Form.Group controlId="taxCode">
+          <Form.Label>Codice Fiscale</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Inserisci il codice fiscale"
+            value={taxCode}
+            onChange={(e) => setTaxCode(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="first">
+          <Form.Label>Primo</Form.Label>
+          <Form.Control
+            as="select"
+            value={selectedFirst}
+            onChange={(e) => setSelectedFirst(e.target.value)}
+            required
+          >
+            <option value="">Seleziona un primo</option>
+            {menu?.first?.length ? (
+              menu.first.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))
+            ) : (
+              <option value="">Nessuna opzione disponibile</option>
+            )}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group controlId="second">
+          <Form.Label>Secondo</Form.Label>
+          <Form.Control
+            as="select"
+            value={selectedSecond}
+            onChange={(e) => setSelectedSecond(e.target.value)}
+            required
+          >
+            <option value="">Seleziona un secondo</option>
+            {menu?.second?.length ? (
+              menu.second.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))
+            ) : (
+              <option value="">Nessuna opzione disponibile</option>
+            )}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group controlId="side">
+          <Form.Label>Contorno</Form.Label>
+          <Form.Control
+            as="select"
+            value={selectedSide}
+            onChange={(e) => setSelectedSide(e.target.value)}
+            required
+          >
+            <option value="">Seleziona un contorno</option>
+            {menu?.side?.length ? (
+              menu.side.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))
+            ) : (
+              <option value="">Nessuna opzione disponibile</option>
+            )}
+          </Form.Control>
+        </Form.Group>
+        <Button variant="primary" type="submit" className="submit-button">
+          Ordina
+        </Button>
+      </Form>
+    </div>
   );
 };
 

@@ -1,8 +1,40 @@
-/* App.css */
 
 body {
-  background-color: #eff1f5; /* Dark gray background */
+  background-color: #eff1f5;
   font-family: "Arial", sans-serif;
+}
+
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px); /* Sfondo blurrato */
+  z-index: 999;
+}
+
+.login-popup {
+  background-color: #dce0e8;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .homepage-container {
@@ -12,8 +44,9 @@ body {
 .header-title {
   color: #1a2130;
   text-align: left;
-  margin-bottom: 2rem;
-  margin-left: 5rem;
+  margin-bottom: 5rem;
+  margin-left: 6rem;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .header-row {
@@ -25,6 +58,15 @@ body {
   justify-content: center;
   margin-top: 2rem;
 }
+.form-group {
+  margin-bottom: 2rem; /* Aggiungi spazio tra le sezioni del modulo */
+}
+.form-label {
+  margin-top: 1rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+}
+
 
 .form-column {
   display: flex;
@@ -38,24 +80,48 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-left: 1rem;
   margin-bottom: 5rem;
+  margin-top: 2rem;
 }
 
 .menu-card {
   max-width: 500px;
-  margin: 0 auto; /* Centra la card orizzontalmente */
-  text-align: center; /* Centra il testo all'interno della card */
+  margin: 0 auto; /* Center the card horizontally */
+  text-align: center; /* Center the text inside the card */
 }
 
-/* Assicurati che il testo all'interno della card sia centrato */
+/* Ensure the text inside the card is centered */
 .menu-card .card-body {
-  text-align: left; /* Centra il testo del corpo della card */
+  text-align: left; /* Center the card body text */
 }
 
-/* Stili per l'alert di errore */
+/* Error message styles */
 .error-message {
-  margin: 0; /* Rimuove il margine per adattarsi alla card */
-  padding: 1rem; /* Aggiunge padding all'alert */
+  margin: 0; /* Remove margin to fit inside the card */
+  padding: 1rem; /* Add padding to the alert */
 }
+
+.alert {
+  margin-bottom: 20px;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
 
 .footer {
   background-color: #232634;
@@ -109,8 +175,37 @@ body {
 }
 
 .submit-button {
-  margin-top: 1rem; /* Add space above the button */
+  margin-top: 2rem; /* Spazio sopra il pulsante */
+  display: block; /* Imposta il pulsante come blocco per l'allineamento centrato */
+  margin: 1rem auto 0; /* Centra il pulsante orizzontalmente */
+  padding: 0.35rem 1rem; /* Padding per ingrandire il pulsante */
+  font-size: 1rem; /* Dimensione del testo */
+  font-weight: bold; /* Testo in grassetto */
+  color: #ffffff; /* Colore del testo */
+  background-color: #007bff; /* Colore di sfondo del pulsante */
+  border: none; /* Rimuove il bordo predefinito */
+  border-radius: 0.5rem; /* Angoli arrotondati */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra leggera */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Transizione per l'effetto hover */
 }
+
+.submit-button:hover {
+  background-color: #0056b3; /* Colore di sfondo al passaggio del mouse */
+  transform: scale(1.05); /* Leggero ingrandimento al passaggio del mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Ombra più scura al passaggio del mouse */
+}
+
+.submit-button:active {
+  background-color: #004080; /* Colore di sfondo quando il pulsante è premuto */
+  transform: scale(1); /* Ripristina la dimensione originale */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra normale quando il pulsante è premuto */
+}
+
+.submit-button:focus {
+  outline: none; /* Rimuove il bordo di messa a fuoco predefinito */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Aggiunge un bordo di messa a fuoco personalizzato */
+}
+
 
 .menu-of-the-day-container {
   max-width: 500px;
@@ -123,37 +218,43 @@ body {
 
 /* Navbar styles */
 .navbar-custom {
-  height: 80px; /* Altezza della NavBar */
+  height: 80px; /* Altezza della navbar */
+  background: #303446;
   display: flex;
   align-items: center;
-  background: #303446;
+  padding: 0;
+  position: relative; /* Necessario per posizionare il brand al centro */
 }
 
 .navbar-brand {
-  position: absolute;
-  left: 50%; /* Centro del brand */
-  transform: translateX(-50%); /* Centro perfetto */
+  position: absolute; /* Permette di posizionare il brand al centro */
+  left: 50%;
+  transform: translateX(-50%); /* Centra il brand */
   display: flex;
   align-items: center;
-  justify-content: center; /* Centro logo e testo */
 }
 
 .navbar-brand img {
-  margin-right: 10px; /* Spazio tra il logo e il testo */
+  margin-right: 10px; /* Spazio tra logo e testo */
 }
 
 .navbar-brand span {
+  font-size: 2rem; /* Dimensione del testo */
+  font-family: 'Times New Roman', Times, serif;
   color: #c6d0f5;
-  font-size: 1.25rem; /* Dimensione del testo */
 }
 
-/* Pulsanti a sinistra */
 .navbar-nav-left {
   display: flex;
   flex-direction: row;
-  margin-right: auto; /* Allinea i pulsanti a sinistra */
+  margin-right: auto; /* Spinge i pulsanti verso il bordo sinistro */
+  align-items: center; /* Allinea verticalmente gli elementi */
 }
 
 .nav-button {
-  margin-right: 1rem; /* Spazio tra i pulsanti */
+  margin-right: 0.5rem; /* Spazio tra i pulsanti */
+}
+
+.navbar-toggler {
+  border: none; /* Rimuove il bordo della toggler */
 }

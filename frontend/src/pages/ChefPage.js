@@ -1,14 +1,12 @@
 import { Container, Table, Button, Form, Modal } from "react-bootstrap";
-import { useAdminHooks } from "../hooks/AdminHooks";
+import { useChefHooks } from "../hooks/ChefHooks";
 const ChefPage = () => {
   const {
     menus,
     orders,
     showMenuModal,
-    showOrderModal,
     showConfirmModal,
     currentMenu,
-    currentOrder,
     deleteType,
     formatDate,
     handleShowMenuModal,
@@ -18,7 +16,7 @@ const ChefPage = () => {
     handleDeleteOldMenus,
     handleCloseConfirmModal,
     handleConfirmDelete,
-  } = useAdminHooks();
+  } = useChefHooks();
 
   return (
     <Container className="mt-5">
@@ -113,6 +111,7 @@ const ChefPage = () => {
         </Form>
       </Modal>
 
+      <h1>Lista degli Ordini</h1>
       <Table striped bordered hover className="mt-3">
         <thead>
           <tr>

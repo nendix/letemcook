@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { loginUser } from "../services/api";
+import { jwtDecode } from "jwt-decode";
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+  const usernameRef = useRef(null); // Creazione del ref
+
+  useEffect(() => {
+    if (usernameRef.current) {
+      usernameRef.current.focus();
+    }
+  }, []); // Questo effetto viene eseguito solo quando il componente viene montato
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,19 +25,17 @@ const Login = () => {
       const decodedToken = jwtDecode(token);
       console.log("Decoded Token:", decodedToken);
 
-      if (decodedToken.roles.includes("admin")) {
-        navigate("/admin");
-      } else {
-        navigate("/");
+      if (onLoginSuccess) {
+        onLoginSuccess(); // Chiude il pop-up e gestisce la navigazione
       }
     } catch (error) {
-      setMessage("Login failed. Please check your credentials.");
+      setMessage("Login fallito. Per favore controlla le tue credenziali.");
     }
   };
 
   return (
     <div className="login-container">
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="form-content">
         <Form.Group controlId="username">
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -40,6 +43,7 @@ const Login = () => {
             placeholder="Enter username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            ref={usernameRef} // Assegna il ref al campo username
           />
         </Form.Group>
 
@@ -55,7 +59,7 @@ const Login = () => {
 
         {message && <Alert variant="danger">{message}</Alert>}
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="submit-button">
           Login
         </Button>
       </Form>

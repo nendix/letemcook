@@ -1,6 +1,5 @@
 const Menu = require("../models/Menu");
 const asyncHandler = require("express-async-handler");
-const jwt = require("jsonwebtoken");
 
 // @desc Get menu of the day
 // @route POST /menus/today

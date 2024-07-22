@@ -1,6 +1,5 @@
 const Order = require("../models/Order");
 const asyncHandler = require("express-async-handler");
-const jwt = require("jsonwebtoken");
 
 // @desc Get all orders
 // @route GET /orders

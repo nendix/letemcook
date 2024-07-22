@@ -1,77 +1,128 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Navbar, Nav, Button, Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "../App.css";
-import { jwtDecode } from "jwt-decode";
 
-const Header = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
+const Header = ({
+  toggleLogin,
+  handleLogout,
+  isAuthenticated,
+  checkAuthentication,
+}) => {
+  const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        setIsAdmin(decodedToken.roles.includes("admin"));
-      } catch (e) {
-        console.error("Error decoding token:", e);
-      }
+  const handleAdminClick = () => {
+    if (!checkAuthentication("admin", navigate)) {
+      alert(
+        "Non sei autorizzato ad accedere alla pagina Admin. Effettua il login.",
+      );
     }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
   };
+
+  const handleChefClick = () => {
+    if (!checkAuthentication("chef", navigate)) {
+      alert(
+        "Non sei autorizzato ad accedere alla pagina Chef. Effettua il login.",
+      );
+    }
+  };
+
+  const isHomePage = location.pathname === "/";
+  const isAdminPage = location.pathname === "/admin";
+  const isChefPage = location.pathname === "/chef";
 
   return (
     <Navbar expand="lg" className="navbar-custom">
-      <Container>
+      <Container fluid>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="navbar-nav-left">
-            <Button
-              variant="outline-primary"
-              as={Link}
-              to="/"
-              className="nav-button"
-            >
-              Home
-            </Button>
-            <Button
-              variant="outline-primary"
-              as={Link}
-              to="/login"
-              className="nav-button"
-            >
-              Login
-            </Button>
-            {isAdmin && (
+            {isHomePage && (
+              <>
+                <Button
+                  variant="outline-primary"
+                  onClick={handleAdminClick} // Aggiungi la logica per Admin
+                  className="nav-button"
+                >
+                  Admin
+                </Button>
+                <Button
+                  variant="outline-primary"
+                  onClick={handleChefClick} // Aggiungi la logica per Chef
+                  className="nav-button"
+                >
+                  Chef
+                </Button>
+              </>
+            )}
+            {isAdminPage && (
+              <>
+                <Button
+                  variant="outline-primary"
+                  as={Link}
+                  to="/"
+                  className="nav-button"
+                >
+                  Home
+                </Button>
+                <Button
+                  variant="outline-primary"
+                  as={Link}
+                  to="/chef"
+                  className="nav-button"
+                >
+                  Chef
+                </Button>
+                <Button
+                  variant="outline-danger"
+                  onClick={() => handleLogout(navigate)}
+                >
+                  Logout
+                </Button>
+              </>
+            )}
+
+            {isChefPage && (
+              <>
+                <Button
+                  variant="outline-primary"
+                  as={Link}
+                  to="/"
+                  className="nav-button"
+                >
+                  Home
+                </Button>
+                <Button
+                  variant="outline-danger"
+                  onClick={() => handleLogout(navigate)}
+                >
+                  Logout
+                </Button>
+              </>
+            )}
+
+            {!isHomePage && !isAdminPage && !isChefPage && (
               <Button
                 variant="outline-primary"
-                as={Link}
-                to="/admin"
+                onClick={toggleLogin} // Mostra il pop-up di login se necessario
                 className="nav-button"
               >
-                Admin
+                Login
               </Button>
             )}
           </Nav>
           <Navbar.Brand className="navbar-brand">
             <img
               src={logo}
-              width="30"
-              height="30"
+              width="50"
+              height="50"
               className="d-inline-block align-top"
               alt="Logo"
             />
             <span className="ms-2">Mensa Universitaria</span>
           </Navbar.Brand>
-          <Button variant="outline-danger" onClick={handleLogout}>
-            Logout
-          </Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>
