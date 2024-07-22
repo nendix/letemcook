@@ -28,7 +28,7 @@ const orderSchema = new mongoose.Schema(
 
 orderSchema.plugin(AutoIncrement, {
   inc_field: "ticket",
-  id: "ticketNums",
+  id: "ticket",
   start_seq: 1,
 });
 

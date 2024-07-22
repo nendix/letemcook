@@ -116,7 +116,7 @@ const resetOrdersAndTickets = asyncHandler(async (req, res) => {
     await Order.deleteMany({});
 
     // Resetta il ticket a 1
-    // await Order.updateMany({}, { $set: { ticket: 1 } });
+    await Counter.reset("ticket");
 
     res.status(200).send({ message: "Two-week-old orders eliminated." });
   } catch (error) {

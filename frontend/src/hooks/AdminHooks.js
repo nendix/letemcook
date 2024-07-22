@@ -34,6 +34,7 @@ export const useAdminHooks = () => {
   const [menuError, setMenuError] = useState("");
   const [orderError, setOrderError] = useState("");
   const [userError, setUserError] = useState("");
+
   useEffect(() => {
     loadMenus();
     loadOrders();

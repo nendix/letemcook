@@ -41,3 +41,24 @@
 20240721	19:11:26	e6a2c8c4-96f1-4f23-b66e-ba3647ed7e24	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
 20240721	19:12:56	311ac4c9-3a1e-496c-9ef7-8deaa9b4f506	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
 20240721	19:12:58	9cd8b661-7485-489e-9cdf-3f3256e11984	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240722	16:05:12	4cfe9eaf-ec26-4bf1-82a7-ddf7a6622e19	ValidationError: Menu validation failed: side.2: Path `side.2` is required.	PATCH	/menus	http://localhost:3000
+20240722	16:11:17	8afa1818-0dc7-452a-8dc0-ad772764bf1a	Error: Cannot find module './Counter'
+Require stack:
+- /Users/daniele/letemcookMERN/server/models/Order.js
+- /Users/daniele/letemcookMERN/server/controllers/orderController.js
+- /Users/daniele/letemcookMERN/server/index.js	POST	/orders	http://localhost:3000
+20240722	16:11:24	0ca7274d-33d2-4b6c-85a8-73d9378a1dbc	Error: Cannot find module './Counter'
+Require stack:
+- /Users/daniele/letemcookMERN/server/models/Order.js
+- /Users/daniele/letemcookMERN/server/controllers/orderController.js
+- /Users/daniele/letemcookMERN/server/index.js	POST	/orders	http://localhost:3000
+20240722	16:12:12	f7a2d524-4d3b-47af-83dd-88e3cc054bf3	Error: Cannot find module './Counter'
+Require stack:
+- /Users/daniele/letemcookMERN/server/models/Order.js
+- /Users/daniele/letemcookMERN/server/controllers/orderController.js
+- /Users/daniele/letemcookMERN/server/index.js	POST	/orders	http://localhost:3000
+20240722	16:13:12	192aa438-29d0-497d-8580-e48de68adb3a	Error: Cannot find module './Counter'
+Require stack:
+- /Users/daniele/letemcookMERN/server/models/Order.js
+- /Users/daniele/letemcookMERN/server/controllers/orderController.js
+- /Users/daniele/letemcookMERN/server/index.js	POST	/orders	http://localhost:3000

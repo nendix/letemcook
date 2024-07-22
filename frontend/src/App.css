@@ -143,6 +143,7 @@ body {
 }
 
 .navbar-brand span {
+  color: #c6d0f5;
   font-size: 1.25rem; /* Dimensione del testo */
 }
 

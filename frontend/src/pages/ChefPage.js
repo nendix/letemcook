@@ -120,6 +120,7 @@ const ChefPage = () => {
             <th>Primo</th>
             <th>Secondo</th>
             <th>Contorno</th>
+            <th>Ticket</th>
           </tr>
         </thead>
         <tbody>
