@@ -4,29 +4,16 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "../App.css";
 
-const Header = ({
-  toggleLogin,
-  handleLogout,
-  isAuthenticated,
-  checkAuthentication,
-}) => {
+const Header = ({ toggleLogin, handleLogout, checkAuthentication }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleAdminClick = () => {
-    if (!checkAuthentication("admin", navigate)) {
-      alert(
-        "Non sei autorizzato ad accedere alla pagina Admin. Effettua il login.",
-      );
-    }
+    checkAuthentication("admin", navigate);
   };
 
   const handleChefClick = () => {
-    if (!checkAuthentication("chef", navigate)) {
-      alert(
-        "Non sei autorizzato ad accedere alla pagina Chef. Effettua il login.",
-      );
-    }
+    checkAuthentication("chef", navigate);
   };
 
   const isHomePage = location.pathname === "/";
