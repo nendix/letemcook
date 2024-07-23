@@ -3,46 +3,6 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// @desc Register a new user
-// @route POST /users/register
-// @access Public
-const registerUser = asyncHandler(async (req, res) => {
-  const { username, password } = req.body;
-
-  // Confirm data
-  if (!username || !password) {
-    return res
-      .status(400)
-      .json({ message: "Username and password are required" });
-  }
-
-  // Check for duplicate username
-  const duplicate = await User.findOne({ username }).lean().exec();
-
-  if (duplicate) {
-    return res.status(409).json({ message: "Username already taken" });
-  }
-
-  // Hash password
-  const hashedPwd = await bcrypt.hash(password, 10);
-
-  const userObject = {
-    username,
-    password: hashedPwd,
-    roles: ["user"],
-    active: true,
-  };
-
-  // Create and store new user
-  const user = await User.create(userObject);
-
-  if (user) {
-    res.status(201).json({ message: `New user ${username} registered` });
-  } else {
-    res.status(400).json({ message: "Invalid user data received" });
-  }
-});
-
 // @desc Login user
 // @route POST /users/login
 // @access Public

@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
@@ -19,9 +19,6 @@ function App() {
     isAdmin,
     isChef,
   } = useLoginPopup();
-  // useEffect(() => {
-  //   document.title = "Mensa Unimol";
-  // }, []);
   const navigate = useNavigate();
 
   return (

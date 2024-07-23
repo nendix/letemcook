@@ -5,7 +5,6 @@ const authenticateToken = require("../middleware/authenticateToken");
 const authorizeRoles = require("../middleware/authorizeRoles");
 
 // Rotte pubbliche
-router.post("/register", userController.registerUser);
 router.post("/login", userController.loginUser);
 
 // Rotte private per Admin
