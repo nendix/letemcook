@@ -37,14 +37,13 @@ const useLoginPopup = () => {
     navigate("/");
   };
 
-  const checkAuthentication = (requiredRole, navigate) => {
+  const isAdmin = () => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
         const userRoles = decodedToken.roles;
-        if (userRoles.includes("admin") || userRoles.includes(requiredRole)) {
-          navigate(`/${requiredRole}`);
+        if (userRoles.includes("admin")) {
           return true;
         }
       } catch (e) {
@@ -55,13 +54,30 @@ const useLoginPopup = () => {
     return false;
   };
 
+  const isChef = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const userRoles = decodedToken.roles;
+        if (userRoles.includes("chef")) {
+          return true;
+        }
+      } catch (e) {
+        console.error("Error decoding token:", e);
+      }
+    }
+    setShowLogin(true);
+    return false;
+  };
   return {
     showLogin,
     toggleLogin,
     handleLoginSuccess,
     handleLogout,
     isAuthenticated,
-    checkAuthentication,
+    isAdmin,
+    isChef,
   };
 };
 

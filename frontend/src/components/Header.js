@@ -4,16 +4,20 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "../App.css";
 
-const Header = ({ toggleLogin, handleLogout, checkAuthentication }) => {
+const Header = ({ toggleLogin, handleLogout, isAdmin, isChef }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleAdminClick = () => {
-    checkAuthentication("admin", navigate);
+    if (isAdmin()) {
+      navigate("/admin");
+    }
   };
 
   const handleChefClick = () => {
-    checkAuthentication("chef", navigate);
+    if (isAdmin() || isChef()) {
+      navigate("/chef");
+    }
   };
 
   const isHomePage = location.pathname === "/";
@@ -30,14 +34,14 @@ const Header = ({ toggleLogin, handleLogout, checkAuthentication }) => {
               <>
                 <Button
                   variant="outline-primary"
-                  onClick={handleAdminClick} // Aggiungi la logica per Admin
+                  onClick={handleAdminClick}
                   className="nav-button"
                 >
                   Admin
                 </Button>
                 <Button
                   variant="outline-primary"
-                  onClick={handleChefClick} // Aggiungi la logica per Chef
+                  onClick={handleChefClick}
                   className="nav-button"
                 >
                   Chef
@@ -93,7 +97,7 @@ const Header = ({ toggleLogin, handleLogout, checkAuthentication }) => {
             {!isHomePage && !isAdminPage && !isChefPage && (
               <Button
                 variant="outline-primary"
-                onClick={toggleLogin} // Mostra il pop-up di login se necessario
+                onClick={toggleLogin}
                 className="nav-button"
               >
                 Login

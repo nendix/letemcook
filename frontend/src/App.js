@@ -10,7 +10,6 @@ import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import AdminPage from "./pages/AdminPage";
 import Login from "./components/Login";
-import Register from "./components/Register";
 import PrivateRoute from "./utils/PrivateRoute";
 import ChefPage from "./pages/ChefPage";
 import useLoginPopup from "./hooks/LoginHooks";
@@ -21,7 +20,8 @@ function App() {
     toggleLogin,
     handleLoginSuccess,
     handleLogout,
-    checkAuthentication,
+    isAdmin,
+    isChef,
   } = useLoginPopup();
 
   const navigate = useNavigate();
@@ -31,7 +31,8 @@ function App() {
       <Header
         toggleLogin={toggleLogin}
         handleLogout={handleLogout}
-        checkAuthentication={checkAuthentication}
+        isAdmin={isAdmin}
+        isChef={isChef}
       />
       {showLogin && (
         <div className="login-overlay">
@@ -68,7 +69,6 @@ function App() {
             }
           />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
       <Footer />
@@ -76,10 +76,4 @@ function App() {
   );
 }
 
-const AppWrapper = () => (
-  <Router>
-    <App />
-  </Router>
-);
-
-export default AppWrapper;
+export default App;

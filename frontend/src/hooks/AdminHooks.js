@@ -249,7 +249,7 @@ export const useAdminHooks = () => {
     try {
       await resetOrdersAndTickets();
       loadOrders();
-      alert("Ordini vecchi di due settimane eliminati.");
+      alert("Ordini eliminati e ticket resettati");
     } catch (error) {
       alert("Errore durante l'eliminazione degli ordini.");
     }

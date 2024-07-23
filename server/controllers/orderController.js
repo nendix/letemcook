@@ -106,6 +106,10 @@ const deleteOrder = asyncHandler(async (req, res) => {
 
   const reply = `Order of  ${result.taxCode} with ID ${result._id} deleted`;
 
+  const remainingOrders = await Order.countDocuments().exec();
+  if (remainingOrders === 0) {
+    Order.counterReset("ticket_id", function () {});
+  }
   res.json(reply);
 });
 
@@ -114,14 +118,18 @@ const resetOrdersAndTickets = asyncHandler(async (req, res) => {
     // Elimina tutti gli ordini
     await Order.deleteMany({});
 
-    // Resetta il ticket a 1
-    await Counter.reset("ticket");
+    Order.counterReset("ticket_id", function () {});
 
-    res.status(200).send({ message: "Two-week-old orders eliminated." });
+    res.status(200).send({ message: "Orders deleted and ticket reset" });
   } catch (error) {
-    res.status(500).send({ message: "Error deleting orders:", error });
+    res.status(500).send({
+      message: "Error deleting orders or resetting ticket",
+      error: error.message,
+    });
   }
 });
+
+module.exports = resetOrdersAndTickets;
 module.exports = {
   getAllOrders,
   createNewOrder,

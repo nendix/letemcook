@@ -145,6 +145,7 @@ const AdminPage = () => {
             <th>Primo</th>
             <th>Secondo</th>
             <th>Contorno</th>
+            <th>Ticket</th>
             <th>Azioni</th>
           </tr>
         </thead>
@@ -155,6 +156,7 @@ const AdminPage = () => {
               <td>{order.first}</td>
               <td>{order.second}</td>
               <td>{order.side}</td>
+              <td>{order.ticket}</td>
               <td>
                 <Button
                   variant="warning"
@@ -306,8 +308,8 @@ const AdminPage = () => {
           {deleteType === "menu"
             ? "menu"
             : deleteType === "order"
-            ? "ordine"
-            : "utente"}
+              ? "ordine"
+              : "utente"}
           ?
         </Modal.Body>
         <Modal.Footer>

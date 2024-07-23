@@ -4,18 +4,29 @@ const orderController = require("../controllers/orderController");
 const authenticateToken = require("../middleware/authenticateToken");
 const authorizeRoles = require("../middleware/authorizeRoles");
 
-router.use(authenticateToken); // Autenticazione necessaria
-
 router
   .route("/")
-  .get(authorizeRoles("admin", "chef"), orderController.getAllOrders)
-  .post(authorizeRoles("admin"), orderController.createNewOrder)
-  .patch(authorizeRoles("admin"), orderController.updateOrder)
-  .delete(authorizeRoles("admin"), orderController.deleteOrder);
+  .get(
+    authenticateToken,
+    authorizeRoles("admin", "chef"),
+    orderController.getAllOrders,
+  )
+  .post(orderController.createNewOrder) // Non protetto
+  .patch(
+    authenticateToken,
+    authorizeRoles("admin"),
+    orderController.updateOrder,
+  )
+  .delete(
+    authenticateToken,
+    authorizeRoles("admin"),
+    orderController.deleteOrder,
+  );
 
 router.delete(
   "/reset",
-  authorizeRoles("admin"),
+  // authenticateToken,
+  // authorizeRoles("admin"),
   orderController.resetOrdersAndTickets,
 );
 

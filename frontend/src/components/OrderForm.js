@@ -43,7 +43,6 @@ const OrderForm = () => {
 
     const orderData = {
       taxCode,
-      date: date.toISOString().split("T")[0], // Use current date
       first: selectedFirst,
       second: selectedSecond,
       side: selectedSide,
@@ -72,8 +71,8 @@ const OrderForm = () => {
               messageType === "success"
                 ? "alert-success"
                 : messageType === "error"
-                ? "alert-danger"
-                : "alert-warning"
+                  ? "alert-danger"
+                  : "alert-warning"
             }`}
             role="alert"
           >
