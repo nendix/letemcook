@@ -1,10 +1,6 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { React, useEffect } from "react";
+
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
@@ -23,7 +19,9 @@ function App() {
     isAdmin,
     isChef,
   } = useLoginPopup();
-
+  // useEffect(() => {
+  //   document.title = "Mensa Unimol";
+  // }, []);
   const navigate = useNavigate();
 
   return (

@@ -12,10 +12,7 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5050;
 const cron = require("node-cron");
 const { deleteOldMenus } = require("./controllers/menuController");
-const {
-  deleteOldOrders,
-  resetOrdersAndTickets,
-} = require("./controllers/orderController");
+const { resetOrdersAndTickets } = require("./controllers/orderController");
 
 console.log(process.env.NODE_ENV);
 console.log(process.env.DB_URI);

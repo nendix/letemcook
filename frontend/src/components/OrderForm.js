@@ -4,7 +4,7 @@ import { createOrder, getMenuOfTheDay } from "../services/api";
 import "../App.css"; // import the CSS file
 
 const OrderForm = () => {
-  const [date, setDate] = useState(new Date()); // Current date
+  const [date] = useState(new Date()); // Current date
   const [menu, setMenu] = useState(null);
   const [taxCode, setTaxCode] = useState("");
   const [selectedFirst, setSelectedFirst] = useState("");

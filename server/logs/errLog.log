@@ -62,3 +62,12 @@ Require stack:
 - /Users/daniele/letemcookMERN/server/models/Order.js
 - /Users/daniele/letemcookMERN/server/controllers/orderController.js
 - /Users/daniele/letemcookMERN/server/index.js	POST	/orders	http://localhost:3000
+20240723	19:23:13	8512ae62-5b54-433d-8953-4e251dc86395	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240723	19:23:20	ea320865-b1b7-4997-b4da-66048cc12c2a	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240723	19:23:25	2d29aa30-89e8-4dbd-a916-7ac42760e24e	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240723	19:23:26	1b881d79-9202-4338-b62b-daeb71b60b6a	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240723	19:23:26	a32556dd-e044-469a-9ded-fcc0ab88700d	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240723	19:23:26	37e34b15-9813-45d4-a26f-89ecda1212e3	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240723	19:23:26	0361d667-4685-454f-8d36-68294d9de7f9	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240723	19:23:26	487bc804-56dc-473f-8251-7970858d7cb1	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
+20240723	19:23:26	091ae667-bfa9-4914-8c8d-bc6c73e4703a	Error: secretOrPrivateKey must have a value	POST	/users/login	http://localhost:3000
