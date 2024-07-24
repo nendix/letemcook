@@ -6,6 +6,8 @@ import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import AdminPage from "./pages/AdminPage";
 import Login from "./components/Login";
+import Privacy from "./components/Privacy";
+import Terms from "./components/Terms";
 import PrivateRoute from "./utils/PrivateRoute";
 import ChefPage from "./pages/ChefPage";
 import useLoginPopup from "./hooks/LoginHooks";
@@ -64,6 +66,8 @@ function App() {
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </div>
       <Footer />

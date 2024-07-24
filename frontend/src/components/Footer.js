@@ -9,13 +9,13 @@ const Footer = () => {
         <Row>
           <Col md={4} className="text-center text-md-left">
             <h5>Contatti</h5>
-            <p>Email: info@mensauniversitaria.it</p>
-            <p>Telefono: +39 123 456 789</p>
+            <p>Email: web@unimol.it</p>
+            <p>Telefono: 0874 404100</p>
           </Col>
           <Col md={4} className="text-center">
             <h5>Seguici</h5>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/unimolise"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -23,7 +23,7 @@ const Footer = () => {
             </a>{" "}
             |
             <a
-              href="https://telegram.org"
+              href="https://t.me/barunimolpesche"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -43,9 +43,7 @@ const Footer = () => {
         </Row>
         <Row className="mt-3">
           <Col className="text-center">
-            <p>
-              Creato da Christian La Bella, Daniele Merola, Christian Parrillo
-            </p>
+            <p>Creato da Christian La Bella e Daniele Merola</p>
           </Col>
         </Row>
       </Container>

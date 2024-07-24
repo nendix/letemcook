@@ -97,10 +97,11 @@ const Header = ({ toggleLogin, handleLogout, isAdmin, isChef }) => {
             {!isHomePage && !isAdminPage && !isChefPage && (
               <Button
                 variant="outline-primary"
-                onClick={toggleLogin}
+                as={Link}
+                to="/"
                 className="nav-button"
               >
-                Login
+                Home
               </Button>
             )}
           </Nav>
