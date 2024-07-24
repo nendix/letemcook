@@ -23,10 +23,11 @@ router
     orderController.deleteOrder,
   );
 
+router.get("/last", orderController.getLastOrder); // Non protetto
 router.delete(
   "/reset",
-  // authenticateToken,
-  // authorizeRoles("admin"),
+  authenticateToken,
+  authorizeRoles("admin"),
   orderController.resetOrdersAndTickets,
 );
 

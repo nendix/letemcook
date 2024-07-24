@@ -33,7 +33,7 @@ export const createOrder = (orderData) => api.post("/orders", orderData);
 export const updateOrder = (orderData) => api.patch("/orders", orderData);
 export const deleteOrder = (id) => api.delete("/orders", { data: { id } });
 export const resetOrdersAndTickets = () => api.delete("/orders/reset");
-
+export const getLastOrder = () => api.get("/orders/last");
 // User APIs
 export const registerUser = (userData) => api.post("/users/register", userData);
 export const loginUser = (credentials) => api.post("/users/login", credentials);

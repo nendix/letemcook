@@ -1,6 +1,23 @@
 const Order = require("../models/Order");
 const asyncHandler = require("express-async-handler");
 
+// @desc Get last order ticket
+// @route GET /orders/ticket
+// @access public
+const getLastOrder = asyncHandler(async (req, res) => {
+  try {
+    // Trova l'ultimo ordine creato ordinando per il campo createdAt in ordine decrescente
+    const lastOrder = await Order.findOne().sort({ createdAt: -1 }).lean();
+
+    if (!lastOrder) {
+      return res.status(404).json({ message: "No orders found" });
+    }
+
+    res.json(lastOrder);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
 // @desc Get all orders
 // @route GET /orders
 // @access Private
@@ -17,7 +34,7 @@ const getAllOrders = asyncHandler(async (req, res) => {
 
 // @desc Create new order
 // @route POST /orders
-// @access Private
+// @access public
 const createNewOrder = asyncHandler(async (req, res) => {
   const { taxCode, first, second, side } = req.body;
 
@@ -131,6 +148,7 @@ const resetOrdersAndTickets = asyncHandler(async (req, res) => {
 
 module.exports = resetOrdersAndTickets;
 module.exports = {
+  getLastOrder,
   getAllOrders,
   createNewOrder,
   updateOrder,

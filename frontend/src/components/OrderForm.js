@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import { createOrder, getMenuOfTheDay } from "../services/api";
-import "../App.css"; // import the CSS file
+import { createOrder, getMenuOfTheDay, getLastOrder } from "../services/api";
+import Receipt from "./Receipt"; // Importa il file Receipt.js
+import "../App.css"; // Importa il file CSS
 
 const OrderForm = () => {
-  const [date] = useState(new Date()); // Current date
+  const [date] = useState(new Date()); // Data corrente
   const [menu, setMenu] = useState(null);
   const [taxCode, setTaxCode] = useState("");
   const [selectedFirst, setSelectedFirst] = useState("");
   const [selectedSecond, setSelectedSecond] = useState("");
   const [selectedSide, setSelectedSide] = useState("");
-  const [message, setMessage] = useState(""); // State for messages
-  const [messageType, setMessageType] = useState(""); // State for message type (success or error)
+  const [message, setMessage] = useState(""); // Stato per i messaggi
+  const [messageType, setMessageType] = useState(""); // Stato per il tipo di messaggio (success o error)
+  const [showReceipt, setShowReceipt] = useState(false); // Stato per visualizzare lo scontrino
+  const [receiptData, setReceiptData] = useState(null); // Dati per lo scontrino
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -21,7 +24,7 @@ const OrderForm = () => {
         setSelectedFirst("");
         setSelectedSecond("");
         setSelectedSide("");
-        setMessage(""); // Clear any previous messages
+        setMessage(""); // Cancella eventuali messaggi precedenti
       } catch (error) {
         setMessage("Errore nel recupero del menu. Riprova.");
         setMessageType("error");
@@ -52,6 +55,12 @@ const OrderForm = () => {
       await createOrder(orderData);
       setMessage("Ordine inviato con successo!");
       setMessageType("success");
+
+      // Ottieni l'ultimo ordine
+      const lastOrderResponse = await getLastOrder();
+      setReceiptData(lastOrderResponse.data);
+      setShowReceipt(true);
+
       setTaxCode("");
       setSelectedFirst("");
       setSelectedSecond("");
@@ -60,6 +69,11 @@ const OrderForm = () => {
       setMessage("Errore nell'invio dell'ordine. Riprova.");
       setMessageType("error");
     }
+  };
+
+  const closeReceiptModal = () => {
+    setShowReceipt(false);
+    setReceiptData(null);
   };
 
   return (
@@ -153,6 +167,10 @@ const OrderForm = () => {
           Ordina
         </Button>
       </Form>
+
+      {showReceipt && receiptData && (
+        <Receipt receiptData={receiptData} closeModal={closeReceiptModal} />
+      )}
     </div>
   );
 };

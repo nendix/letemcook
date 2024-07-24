@@ -156,7 +156,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  registerUser,
   loginUser,
   getAllUsers,
   createNewUser,
