@@ -3,3 +3,4 @@ server/node_modules
 frontend/node_modules
 .DS_STORE
 server/.DS_STORE
+presentazione/
